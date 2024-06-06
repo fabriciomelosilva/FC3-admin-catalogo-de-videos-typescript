@@ -1,8 +1,7 @@
-import { Entity } from "../../../domain/entity";
-import { NotFoundError } from "../../../domain/errors/not-found.error";
-import { Uuid } from "../../../domain/value-objects/uuid.vo";
-import { InMemoryRepository } from "./in-memory.repository";
-
+import { Entity } from "../../../../domain/entity";
+import { NotFoundError } from "../../../../domain/errors/not-found.error";
+import { Uuid } from "../../../../domain/value-objects/uuid.vo";
+import { InMemoryRepository } from "../in-memory.repository";
 
 type StubEntityConstructor = {
   entity_id?: Uuid;
@@ -78,7 +77,7 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(repo.items[1]).toBe(entities[1]);
   });
 
-  it("should returns all entities", async () => {
+  it("should return all entities", async () => {
     const entity = new StubEntity({ name: "name value", price: 5 });
     await repo.insert(entity);
 
@@ -87,14 +86,14 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(entities).toStrictEqual([entity]);
   });
 
-  it("should throws error on update when entity not found", async () => {
+  it("should throw error on update when entity not found", async () => {
     const entity = new StubEntity({ name: "name value", price: 5 });
     await expect(repo.update(entity)).rejects.toThrow(
       new NotFoundError(entity.entity_id, StubEntity)
     );
   });
 
-  it("should updates an entity", async () => {
+  it("should update an entity", async () => {
     const entity = new StubEntity({ name: "name value", price: 5 });
     await repo.insert(entity);
 
@@ -107,7 +106,7 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(entityUpdated.toJSON()).toStrictEqual(repo.items[0].toJSON());
   });
 
-  it("should throws error on delete when entity not found", async () => {
+  it("should throw error on delete when entity not found", async () => {
     const uuid = new Uuid();
     await expect(repo.delete(uuid)).rejects.toThrow(
       new NotFoundError(uuid.id, StubEntity)
@@ -120,7 +119,7 @@ describe("InMemoryRepository Unit Tests", () => {
     );
   });
 
-  it("should deletes an entity", async () => {
+  it("should delete an entity", async () => {
     const entity = new StubEntity({ name: "name value", price: 5 });
     await repo.insert(entity);
 

@@ -84,7 +84,7 @@ export class CategoryFakeBuilder<TBuild = any> {
             created_at: this.callFactory(this._created_at, index),
           }),
         });
-        //category.validate();
+        category.validate();
         return category;
       });
     return this.countObjs === 1 ? (categories[0] as any) : categories;
@@ -115,7 +115,7 @@ export class CategoryFakeBuilder<TBuild = any> {
     const privateProp = `_${prop}` as keyof this;
     if (!this[privateProp] && optional.includes(prop)) {
       throw new Error(
-        `Property ${prop} not have a factory, use 'with' methods`
+        `Property ${prop} does not have a factory, use "with" method instead`
       );
     }
     return this.callFactory(this[privateProp], 0);
